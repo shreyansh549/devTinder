@@ -1,38 +1,34 @@
 const express = require("express");
+const connectDB = require("./config/database");
 
-const app = express(); // creating an instance of express js
+const app = express();
 
-// app.use((req,res)=>{
-//     res.send("Hello from server");
-// })
-// This will send irrespective of path, eg local:3000 and local:3000/getjsds - both ll show hello from server
+const User = require("./models/user");
 
-// app.use("/test", (req, res) => {
-//   res.send("Hello from test");
-// }); // This ll listen only when we local:3000/test, other - can't GET
+// POST/ sign up/
 
-// app.use("/", (req, res) => {
-//   res.send("Hello from home");
-// });
+app.post("/signup", async (req, res) => {
 
-// app.use - ll match all the http method API calls
+  const user = new User({
+    firstName: "shreyansh",
+    lastName: "Kumar",
+    emailId: "babablacksheep549@gmail.com",
+    password: "abc123",
+  }); // creating a new instance of user model
 
-// This ll match only to GET call
 
-app.get("/user", (req, res) => {
-  res.send({ firstName: "Shreyansh", lastName: "Kumar" });
+  await user.save(); // return you a promise, save in DB
+
+  res.send("User added succesfully");
 });
 
-app.post("/user", (req, res) => {
-  console.log("Saved");
-  res.send("Date succesfully saved to DB");
-});
-
-app.delete("/user", (req, res) => {
-  console.log("Deleted");
-  res.send("Date Deleted");
-});
-
-app.listen(3000, () => {
-  console.log("Server is running listening on port, 3000");
-}); // listen incoming requests, call back is only called whn out=r server is running
+connectDB()
+  .then(() => {
+    console.log("DB connreted");
+    app.listen(3000, () => {
+      console.log("Server is running listening on port, 3000");
+    });
+  })
+  .catch((err) => {
+    console.log("DB error ", err); 
+  });

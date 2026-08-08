@@ -43,7 +43,7 @@ app.get("/user", (req, res) => {
 app.get("/user/:userId", (req, res) => {
   console.log(req.params); 
   //[Object: null prototype] { userId: '202' }
-  res.send("user with params");
+  res.send("user with params"); 
 });
 
 // means   a and c are at extremes and write as many b's in between - abc, abbc, abbbbc, abbbbbbbbc works
