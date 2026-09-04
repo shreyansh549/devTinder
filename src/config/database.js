@@ -3,8 +3,9 @@ const mongoose = require("mongoose");
 
 // this is refererring to a cluster
 const connectDB = async () => {
+    // you rmongo db connection string
   await mongoose.connect(
-    // your mongo db connection string
+    "REMOVED_MONGO_CREDENTIAL",
   );
 };
 module.exports = connectDB;
